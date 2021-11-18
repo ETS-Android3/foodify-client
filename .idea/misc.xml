@@ -7,7 +7,9 @@
         <entry key="app/src/main/res/font-v26/sftext.xml" value="0.40572916666666664" />
         <entry key="app/src/main/res/font/sfrpo_text.xml" value="0.40572916666666664" />
         <entry key="app/src/main/res/font/sftext.xml" value="0.40572916666666664" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.37318840579710144" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.327445652173913" />
       </map>
     </option>
   </component>
