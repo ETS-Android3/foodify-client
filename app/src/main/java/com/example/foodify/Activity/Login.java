@@ -78,6 +78,8 @@ public class Login extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+            Toast.makeText(Login.this, "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
