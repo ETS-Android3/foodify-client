@@ -4,13 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.foodify.Model.AuthRespose;
 import com.example.foodify.Model.BadRequestException;
-import com.example.foodify.Model.LoginData;
 import com.example.foodify.Model.RegisterData;
 import com.example.foodify.R;
 import com.example.foodify.Retrofit.NetworkClient;
@@ -38,6 +39,7 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         nameText = findViewById(R.id.name);
         phoneText = findViewById(R.id.phone);
@@ -50,19 +52,20 @@ public class SignUp extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                InputMethodManager imm = (InputMethodManager)getSystemService(SignUp.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 String phone = phoneText.getText().toString();
                 String password = passwordText.getText().toString();
                 String name = nameText.getText().toString();
-                Boolean is_staff = false;
                 if(Validation.registerValidate(phone, password, name,SignUp.this)) {
-                    registerUser(phone, password, name, is_staff);
+                    registerUser(phone, password, name);
                 }
             }
         });
     }
 
-    private void registerUser(String phone, String password, String name, Boolean is_staff) {
-        RegisterData registerData = new RegisterData(name, phone, is_staff, password);
+    private void registerUser(String phone, String password, String name) {
+        RegisterData registerData = new RegisterData(name, phone, password);
         compositeDisposable.add(service.registerUser(registerData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -78,6 +81,7 @@ public class SignUp extends AppCompatActivity {
                 BadRequestException response = gson.fromJson(errorBody, BadRequestException.class);
                 Toast.makeText(SignUp.this, response.getMessage(), Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
+                Toast.makeText(SignUp.this, "Something went wrong, Please try after sometime", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         } else {

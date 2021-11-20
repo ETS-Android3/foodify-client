@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -50,6 +51,8 @@ public class Login extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                InputMethodManager imm = (InputMethodManager)getSystemService(SignUp.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 String phone = phoneText.getText().toString();
                 String password = passwordText.getText().toString();
                 if(Validation.loginValidate(phone, password, Login.this)) {

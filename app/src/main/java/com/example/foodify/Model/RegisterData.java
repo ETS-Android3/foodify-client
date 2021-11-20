@@ -5,7 +5,7 @@ public class RegisterData {
     String phone;
     String password;
 
-    public RegisterData(String name, String phone, Boolean is_staff, String password) {
+    public RegisterData(String name, String phone, String password) {
         this.name = name;
         this.phone = phone;
         this.password = password;
