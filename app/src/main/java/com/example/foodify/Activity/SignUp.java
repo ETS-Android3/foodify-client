@@ -1,5 +1,6 @@
 package com.example.foodify.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.foodify.Model.AuthRespose;
@@ -34,7 +36,7 @@ public class SignUp extends AppCompatActivity {
     private RetrofitInterface service;
     private EditText nameText, phoneText, passwordText;
     private Button registerButton;
-
+    private ProgressBar loader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,8 @@ public class SignUp extends AppCompatActivity {
         phoneText = findViewById(R.id.phone);
         passwordText = findViewById(R.id.password);
         registerButton = findViewById(R.id.register);
+        loader=findViewById(R.id.progressBar);
+        loader.setVisibility(View.GONE);
 
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
@@ -52,6 +56,8 @@ public class SignUp extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                loader.setVisibility(View.VISIBLE);
+
                 InputMethodManager imm = (InputMethodManager)getSystemService(SignUp.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 String phone = phoneText.getText().toString();
@@ -60,6 +66,8 @@ public class SignUp extends AppCompatActivity {
                 if(Validation.registerValidate(phone, password, name,SignUp.this)) {
                     registerUser(phone, password, name);
                 }
+                else
+                    loader.setVisibility(View.GONE);
             }
         });
     }
@@ -74,12 +82,14 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void handleError(Throwable error) {
+        loader.setVisibility(View.GONE);
         if(error instanceof HttpException){
             Gson gson = new GsonBuilder().create();
             try {
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 BadRequestException response = gson.fromJson(errorBody, BadRequestException.class);
                 Toast.makeText(SignUp.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+
             } catch (IOException e) {
                 Toast.makeText(SignUp.this, "Something went wrong, Please try after sometime", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
@@ -90,6 +100,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void handleResponse(AuthRespose authRespose) {
+        loader.setVisibility(View.GONE);
         Toast.makeText(SignUp.this, authRespose.getToken(), Toast.LENGTH_LONG).show();
     }
 }

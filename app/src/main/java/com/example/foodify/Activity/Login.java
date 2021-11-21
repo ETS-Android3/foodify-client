@@ -2,12 +2,15 @@ package com.example.foodify.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.foodify.Model.AuthRespose;
@@ -35,6 +38,7 @@ public class Login extends AppCompatActivity {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private EditText phoneText, passwordText;
     private Button loginButton;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class Login extends AppCompatActivity {
         phoneText = findViewById(R.id.phone);
         passwordText = findViewById(R.id.password);
         loginButton = findViewById(R.id.register);
+        progressBar=findViewById(R.id.progressBar2);
+        progressBar.setVisibility(View.GONE);
 
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
@@ -51,6 +57,7 @@ public class Login extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                progressBar.setVisibility(View.VISIBLE);
                 InputMethodManager imm = (InputMethodManager)getSystemService(SignUp.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 String phone = phoneText.getText().toString();
@@ -58,6 +65,8 @@ public class Login extends AppCompatActivity {
                 if(Validation.loginValidate(phone, password, Login.this)) {
                     loginUser(phone, password);
                 }
+                else
+                    progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -72,6 +81,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void handleError(Throwable error) {
+        progressBar.setVisibility(View.GONE);
         if(error instanceof HttpException){
             Gson gson = new GsonBuilder().create();
             try {
@@ -83,10 +93,14 @@ public class Login extends AppCompatActivity {
             }
         } else {
             Toast.makeText(Login.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            Log.d("Error",error.getMessage());
         }
     }
 
     private void handleResponse(AuthRespose authRespose) {
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(Login.this, authRespose.getToken(), Toast.LENGTH_LONG).show();
+        Intent intent=new Intent(Login.this,AllCategories.class);
+        startActivity(intent);
     }
 }
