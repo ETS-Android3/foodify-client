@@ -19,7 +19,7 @@ public class Validation {
         if(phone.length() != 10){
             Toast.makeText(context, "Invalid Phone", Toast.LENGTH_LONG).show();
             return false;
-        } else if(password.length() <= 6){
+        } else if(password.length() < 6){
             Toast.makeText(context, "Password must be longer than 6 characters", Toast.LENGTH_LONG).show();
             return false;
         } else if (name.trim().length() == 0){
