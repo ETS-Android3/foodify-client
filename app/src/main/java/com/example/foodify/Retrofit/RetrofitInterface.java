@@ -28,4 +28,6 @@ public interface RetrofitInterface {
     @GET("category/{id}")
     Observable<CategoryById>allFood(@Path("id") String id);
 
+
+
 }

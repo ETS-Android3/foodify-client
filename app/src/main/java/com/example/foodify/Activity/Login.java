@@ -99,7 +99,6 @@ public class Login extends AppCompatActivity {
 
     private void handleResponse(AuthRespose authRespose) {
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(Login.this, authRespose.getToken(), Toast.LENGTH_LONG).show();
         Intent intent=new Intent(Login.this,AllCategories.class);
         startActivity(intent);
     }
