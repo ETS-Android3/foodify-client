@@ -2,11 +2,28 @@ package com.example.foodify.Model;
 
 public class FoodItem {
 String name;
-String categoryId;
+String id;
 String description;
 int price;
 String image;
-int calories;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    int calories;
     public String getName() {
         return name;
     }
@@ -16,11 +33,11 @@ int calories;
     }
 
     public String getCategoryId() {
-        return categoryId;
+        return id;
     }
 
     public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+        this.id = categoryId;
     }
 
     public String getDescription() {

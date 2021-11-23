@@ -1,6 +1,8 @@
 package com.example.foodify.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodify.Adapter.CategoryAdapter;
+import com.example.foodify.Adapter.FoodAdapter;
 import com.example.foodify.Model.Category;
 import com.example.foodify.R;
 import com.example.foodify.Retrofit.NetworkClient;
@@ -27,15 +31,20 @@ public class CategoryById extends AppCompatActivity {
     TextView food_name;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private RetrofitInterface service;
+    RecyclerView recycler_food;
+    RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
-        food_image=findViewById(R.id.food_image);
-        food_name=findViewById(R.id.food_name);
+
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
+        recycler_food=findViewById(R.id.recycler_food);
+        recycler_food.setHasFixedSize(true);
+        layoutManager=new LinearLayoutManager(this);
+        recycler_food.setLayoutManager(layoutManager);
 
 
         if(getIntent()!=null)
@@ -60,14 +69,14 @@ public class CategoryById extends AppCompatActivity {
     }
 
     private void handleResponse(com.example.foodify.Model.CategoryById categoryById) {
-        food_name.setText(categoryById.getItems().get(0).getName());
+//        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+//        food_name.setText(categoryById.getItems().get(0).getName());
+        recycler_food.setAdapter(new FoodAdapter(categoryById));
 
     }
 
 
 
 
-    private void loadListFood(String categoryId) {
 
-    }
 }
