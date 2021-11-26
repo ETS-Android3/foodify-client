@@ -1,11 +1,14 @@
 package com.example.foodify.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +19,8 @@ import com.example.foodify.Model.Category;
 import com.example.foodify.R;
 import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
+import com.example.foodify.Utils.DBHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,7 +32,8 @@ import retrofit2.Retrofit;
 
 public class CategoryById extends AppCompatActivity {
     String categoryId="";
-
+    FloatingActionButton cart;
+    DBHelper DB;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private RetrofitInterface service;
     RecyclerView recycler_food;
@@ -41,10 +47,38 @@ public class CategoryById extends AppCompatActivity {
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
         recycler_food=findViewById(R.id.recycler_food);
+        DB=new DBHelper(this);
         recycler_food.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(this);
         recycler_food.setLayoutManager(layoutManager);
+        cart=findViewById(R.id.view_cart);
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor res=DB.getData();
+                StringBuffer buffer=new StringBuffer();
+                if(res.getCount()==0)
+                    Toast.makeText(CategoryById.this, "NO Data", Toast.LENGTH_SHORT).show();
+               else
+                {
 
+                    while (res.moveToNext()) {
+                        buffer.append( " ID: "+res.getInt(0));
+                        buffer.append(" Quantity: "+res.getInt(1));
+                        buffer.append("\n");
+
+                    }
+
+                }
+                AlertDialog.Builder builder=new AlertDialog.Builder(CategoryById.this);
+               builder.setCancelable(true);
+               builder.setTitle("Entries");
+               builder.setMessage(buffer.toString());
+               builder.show();
+
+
+            }
+        });
 
         if(getIntent()!=null)
         {
@@ -73,6 +107,7 @@ public class CategoryById extends AppCompatActivity {
         recycler_food.setAdapter(new FoodAdapter(categoryById));
 
     }
+
 
 
 
