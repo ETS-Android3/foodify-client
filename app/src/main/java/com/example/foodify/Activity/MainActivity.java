@@ -42,11 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
         Paper.init(this);
-        String token= Paper.book().read(Common.token);
-        Log.d("Token",token);
-//        if(token!=null)
-           if(!token.isEmpty())
-               loginuser(token);
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,35 +60,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void loginuser(String token) {
-        compositeDisposable.add(service.userData(token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleResponse, this::handleError)
-        );
 
-
-
-    }
-
-    private void handleError(Throwable error) {
-        if(error instanceof HttpException){
-            Gson gson = new GsonBuilder().create();
-            try {
-                String errorBody = ((HttpException) error).response().errorBody().string();
-                BadRequestException response = gson.fromJson(errorBody, BadRequestException.class);
-                Toast.makeText(MainActivity.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-            Log.d("Error",error.getMessage());
-        }
-    }
-
-    private void handleResponse(User user) {
-        Intent intent=new Intent(MainActivity.this,AllCategories.class);
-        startActivity(intent);
-    }
 }

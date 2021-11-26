@@ -44,17 +44,17 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+//                Log.d("Token",Common.token);
+               String token= Paper.book().read(Common.token);
 
-                String token= Paper.book().read(Common.token);
-                Log.d("Token",token);
-//        if(token!=null)
-                if(!token.isEmpty())
+       if(token!=null)
+               if(!token.isEmpty())
                     loginuser(token);
-                else {
+               else {
                     Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                     startActivity(intent);
                 }
-            }
+           }
         },2000);
     }
 
