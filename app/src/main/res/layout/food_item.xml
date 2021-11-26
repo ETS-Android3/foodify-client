@@ -8,7 +8,8 @@
     android:layout_marginTop="10dp"
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="10dp"
-    android:background=
+    android:background="@color/white"
+    android:outlineAmbientShadowColor="@color/black"
     android:elevation="3dp"
     tools:layout_constraintCircleRadius="100dp">
 
@@ -24,7 +25,7 @@
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/download" />
+        />
 
     <TextView
         android:id="@+id/food_name"
@@ -37,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/food_desc"
+        android:id="@+id/food_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="184dp"
@@ -54,10 +55,10 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/food_img"
         app:layout_constraintStart_toEndOf="@+id/food_img"
-        app:srcCompat="@drawable/minus" />
+        app:srcCompat="@drawable/ic_baseline_minimize_24" />
 
     <TextView
-        android:id="@+id/t3"
+        android:id="@+id/food_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -70,9 +71,26 @@
         android:id="@+id/plus"
         android:layout_width="24dp"
         android:layout_height="28dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/minus"
-        app:layout_constraintStart_toEndOf="@+id/t3"
+        app:layout_constraintStart_toEndOf="@+id/food_quantity"
         app:layout_constraintTop_toTopOf="@+id/minus"
-        app:srcCompat="@drawable/plus" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_food"
+        android:layout_width="50dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:outlineAmbientShadowColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.826"
+        app:layout_constraintStart_toEndOf="@+id/plus"
+        app:layout_constraintTop_toBottomOf="@+id/food_price"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

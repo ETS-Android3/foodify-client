@@ -6,6 +6,7 @@ String id;
 String description;
 int price;
 String image;
+int calories;
 
     public String getId() {
         return id;
@@ -23,7 +24,7 @@ String image;
         this.image = image;
     }
 
-    int calories;
+
     public String getName() {
         return name;
     }

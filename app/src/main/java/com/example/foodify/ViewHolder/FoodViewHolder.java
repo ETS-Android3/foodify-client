@@ -15,26 +15,24 @@ import com.travijuu.numberpicker.library.NumberPicker;
 
 public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     public TextView txtmenuname;
-    public TextView txtmenudesc;
-    public TextView txtmenuId;
+    public TextView txtmenuprice;
+    public TextView txtquantity;
     public ImageView txtmenuimage;
+    public ImageView plus;
+    public ImageView minus;
     public FloatingActionButton add_item;
     private ItemClickListener itemClickListener;
 
     public FoodViewHolder(@NonNull View itemView) {
         super(itemView);
         txtmenuimage=(ImageView)itemView.findViewById(R.id.food_img);
-        txtmenudesc=(TextView)itemView.findViewById(R.id.food_desc);
+        txtmenuprice=(TextView)itemView.findViewById(R.id.food_price);
         txtmenuname=(TextView)itemView.findViewById(R.id.food_name);
-        txtmenuId=(TextView)itemView.findViewById(R.id.food_id);
+        txtquantity=(TextView)itemView.findViewById(R.id.food_quantity);
         add_item=itemView.findViewById(R.id.add_food);
-        NumberPicker numberPicker = (NumberPicker) itemView.findViewById(R.id.number_picker);
-        numberPicker.setMax(15);
-        numberPicker.setMin(5);
-        numberPicker.setUnit(2);
-        numberPicker.setValue(10);
+        plus=itemView.findViewById(R.id.plus);
+        minus=itemView.findViewById(R.id.minus);
         itemView.setOnClickListener(this);
-//        itemView.setOnCreateContextMenuListener(this);
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -47,10 +45,5 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     }
 
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        menu.setHeaderTitle("Select Action");
-//        menu.add(0,0,getAdapterPosition(), Common.UPDATE);
-//        menu.add(0,1,getAdapterPosition(), Common.DELETE);
-//    }
+
 }

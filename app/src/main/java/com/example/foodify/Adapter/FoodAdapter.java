@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodify.Interface.ItemClickListener;
 import com.example.foodify.Model.CategoryById;
 import com.example.foodify.Model.FoodItem;
 import com.example.foodify.R;
@@ -23,7 +24,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     ArrayList<FoodItem>item;
     private Context context;
     DBHelper DB;
-
+    int quantity=0;
 
     public FoodAdapter(CategoryById array) {
         this.array = array;
@@ -45,15 +46,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
 //        com.example.foodify.Model.CategoryById item=array.getItems()
         holder.txtmenuname.setText(item.get(position).getName());
-        holder.txtmenuId.setText(item.get(position).getId());
-        holder.txtmenudesc.setText(item.get(position).getDescription());
+        holder.txtmenuprice.setText(Integer.toString(item.get(position).getPrice()));
         DB=new DBHelper(context);
         Picasso.with(context).load(item.get(position).getImage()).into(holder.txtmenuimage);
         holder.add_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int id= Integer.parseInt(item.get(position).getId());
-                int quantity= item.get(position).getPrice();
+                holder.txtquantity.setText(Integer.toString(quantity));
                 Boolean checkinsert=DB.insertData(id,quantity);
                 if(checkinsert)
                 {
@@ -61,10 +61,33 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                 }
                 else
                 {
-                    Toast.makeText(context, "Not Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
                 }
 
 
+            }
+        });
+        holder.plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quantity++;
+                holder.txtquantity.setText(Integer.toString(quantity));
+            }
+        });
+        holder.minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(quantity>0)
+                {
+                     quantity--;
+                     holder.txtquantity.setText(Integer.toString(quantity));
+                }
+            }
+        });
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                Toast.makeText(context, "Teri Maa ki chut", Toast.LENGTH_SHORT).show();
             }
         });
 //        holder.txtmenuname.setText(item.getItems().get(position).getName());
