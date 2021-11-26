@@ -27,8 +27,7 @@ import retrofit2.Retrofit;
 
 public class CategoryById extends AppCompatActivity {
     String categoryId="";
-    ImageView food_image;
-    TextView food_name;
+
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private RetrofitInterface service;
     RecyclerView recycler_food;

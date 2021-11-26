@@ -12,6 +12,7 @@ import com.example.foodify.Model.CategoryById;
 import com.example.foodify.Model.FoodItem;
 import com.example.foodify.R;
 import com.example.foodify.ViewHolder.FoodViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
 //        com.example.foodify.Model.CategoryById item=array.getItems()
         holder.txtmenuname.setText(item.get(position).getName());
+        holder.txtmenuId.setText(item.get(position).getId());
+        holder.txtmenudesc.setText(item.get(position).getDescription());
+        Picasso.with(context).load(item.get(position).getImage()).into(holder.txtmenuimage);
 //        holder.txtmenuname.setText(item.getItems().get(position).getName());
 //        holder.txtmenudesc.setText(item.getItems().get(position).getDescription());
 //        Picasso.with(context).load(item.getItems().get(position).getImage()).into(holder.txtmenuimage);
