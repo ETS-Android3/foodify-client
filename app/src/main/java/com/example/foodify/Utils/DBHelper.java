@@ -29,26 +29,30 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public Boolean insertData(int id,int quantity)
     {
-        SQLiteDatabase DB=this.getWritableDatabase();
+            long result=-1;
+            SQLiteDatabase DB=this.getWritableDatabase();
+            Cursor cursor=DB.rawQuery("select * from CartDetails where itemId=?",new String[]{Integer.toString(id)});
 
-//        Cursor cursor=DB.rawQuery("select * from CartDetails where itemID=?",new String[]{String.valueOf(id)});
-//        (cursor.getCount()==0)
+
             ContentValues contentValues = new ContentValues();
             contentValues.put("itemId", id);
             contentValues.put("quantity", quantity);
-        long result = DB.insert("CartDetails", null, contentValues);
-
-//        else
-//        {
-//            ContentValues contentValues = new ContentValues();
-//            contentValues.put("itemId", id);
-//            contentValues.put("quantity", quantity);
-//            result = DB.update("CartDetails", null, contentValues);
-//        }
+        if(cursor.getCount()==0) {
+             result = DB.insert("CartDetails", null, contentValues);
+        }
+        else
+        {
+            DB.update("CartDetails",contentValues,"itemId=?",new String[]{Integer.toString(id)});
+        }
         if(result==-1)
             return false;
         else
             return true;
+    }
+    public void deleteCart()
+    {
+        SQLiteDatabase DB=this.getWritableDatabase();
+        DB.rawQuery("delete from CartDetails",null);
     }
     public Cursor getData()
     {
