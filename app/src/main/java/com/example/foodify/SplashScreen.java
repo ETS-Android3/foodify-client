@@ -1,18 +1,19 @@
-package com.example.foodify.Activity;
+package com.example.foodify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.example.foodify.Activity.AllCategories;
+import com.example.foodify.Activity.MainActivity;
 import com.example.foodify.Common.Common;
 import com.example.foodify.Model.BadRequestException;
 import com.example.foodify.Model.User;
-import com.example.foodify.R;
 import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
 import com.google.gson.Gson;
@@ -27,42 +28,36 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.HttpException;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class SplashScreen extends AppCompatActivity {
     private RetrofitInterface service;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
-
+    LottieAnimationView lottieAnimationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Button register = findViewById(R.id.signUpButton);
-        Button login = findViewById(R.id.logInButton);
-//        Log.d("Enter","Hello Screen");
+        setContentView(R.layout.activity_splash_screen);
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
-        Paper.init(this);
-        String token= Paper.book().read(Common.token);
-        Log.d("Token",token);
-//        if(token!=null)
-           if(!token.isEmpty())
-               loginuser(token);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUp.class);
-                startActivity(intent);
-            }
-        });
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Login.class);
-                startActivity(intent);
-            }
-        });
+        lottieAnimationView=findViewById(R.id.animationview);
 
+        Paper.init(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                String token= Paper.book().read(Common.token);
+                Log.d("Token",token);
+//        if(token!=null)
+                if(!token.isEmpty())
+                    loginuser(token);
+                else {
+                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+        },2000);
     }
+
 
     private void loginuser(String token) {
         compositeDisposable.add(service.userData(token)
@@ -81,18 +76,18 @@ public class MainActivity extends AppCompatActivity {
             try {
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 BadRequestException response = gson.fromJson(errorBody, BadRequestException.class);
-                Toast.makeText(MainActivity.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SplashScreen.this, response.getMessage(), Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SplashScreen.this, "Something went wrong", Toast.LENGTH_SHORT).show();
             Log.d("Error",error.getMessage());
         }
     }
 
     private void handleResponse(User user) {
-        Intent intent=new Intent(MainActivity.this,AllCategories.class);
+        Intent intent=new Intent(SplashScreen.this, AllCategories.class);
         startActivity(intent);
     }
 }

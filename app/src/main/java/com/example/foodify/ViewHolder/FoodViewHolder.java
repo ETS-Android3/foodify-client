@@ -14,6 +14,7 @@ import com.example.foodify.R;
 public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     public TextView txtmenuname;
     public TextView txtmenudesc;
+    public TextView txtmenuId;
     public ImageView txtmenuimage;
     private ItemClickListener itemClickListener;
     public FoodViewHolder(@NonNull View itemView) {
@@ -21,6 +22,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         txtmenuimage=(ImageView)itemView.findViewById(R.id.food_img);
         txtmenudesc=(TextView)itemView.findViewById(R.id.food_desc);
         txtmenuname=(TextView)itemView.findViewById(R.id.food_name);
+        txtmenuId=(TextView)itemView.findViewById(R.id.food_id);
         itemView.setOnClickListener(this);
 //        itemView.setOnCreateContextMenuListener(this);
     }
