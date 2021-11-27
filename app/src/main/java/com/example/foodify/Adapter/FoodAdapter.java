@@ -1,6 +1,5 @@
 package com.example.foodify.Adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
@@ -12,13 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodify.Interface.ItemClickListener;
 import com.example.foodify.Model.CategoryById;
 import com.example.foodify.Model.FoodItem;
 import com.example.foodify.R;
 import com.example.foodify.Utils.DBHelper;
 import com.example.foodify.ViewHolder.FoodViewHolder;
 import com.squareup.picasso.Picasso;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
 import java.util.ArrayList;
 
@@ -28,6 +27,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     private Context context;
     DBHelper DB;
     int quantity = 0;
+    ElegantNumberButton elegantNumberButton;
 
     public FoodAdapter(CategoryById array) {
         this.array = array;
@@ -47,22 +47,43 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
-//        com.example.foodify.Model.CategoryById item=array.getItems()
         holder.txtmenuname.setText(item.get(position).getName());
         holder.txtmenuprice.setText(Integer.toString(item.get(position).getPrice()) + " $");
+        holder.txtdesc.setText((item.get(position).getDescription()));
         DB = new DBHelper(context);
         Picasso.with(context).load(item.get(position).getImage()).into(holder.txtmenuimage);
         holder.add_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setCancelable(true);
-                builder.setView(R.layout.add_item_quantity)
+                LayoutInflater inflater=LayoutInflater.from(context);
+                View view1=inflater.inflate(R.layout.add_item_quantity,null);
+                elegantNumberButton=view1.findViewById(R.id.quantity);
+
+                builder.setView(view1)
                         .setPositiveButton("Add",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Toast.makeText(view.getContext(), "Hello", Toast.LENGTH_SHORT).show();
+                                        int id= Integer.parseInt(item.get(position).getId());
+
+                                        String q=elegantNumberButton.getNumber();
+                                        quantity=Integer.parseInt(q);
+                                        Toast.makeText(context, q, Toast.LENGTH_SHORT).show();
+                                        Boolean checkinsert=DB.insertData(id,quantity);
+                                        if(checkinsert)
+                                        {
+                                            Toast.makeText(context, "Added Peacefuly", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else
+                                        {
+
+                                            Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 })
                         .setNegativeButton("Cancel",
@@ -75,50 +96,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                                 });
                 builder.create();
                 builder.show();
+
             }
         });
-//        holder.add_item.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int id= Integer.parseInt(item.get(position).getId());
-//                holder.txtquantity.setText(Integer.toString(quantity));
-//                Boolean checkinsert=DB.insertData(id,quantity);
-//                if(checkinsert)
-//                {
-//                    Toast.makeText(context, "Added Peacefuly", Toast.LENGTH_SHORT).show();
-//                }
-//                else
-//                {
-//                    Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
-//                }
-//
-//
-//            }
-//        });
-//        holder.plus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                quantity++;
-//                holder.txtquantity.setText(Integer.toString(quantity));
-//            }
-//        });
-//        holder.minus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(quantity>0)
-//                {
-//                     quantity--;
-//                     holder.txtquantity.setText(Integer.toString(quantity));
-//                }
-//            }
-//        });
-//        holder.setItemClickListener(new ItemClickListener() {
-//            @Override
-//            public void onClick(View view, int position, boolean isLongClick) {
-//                Toast.makeText(context, "Teri Maa ki chut", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
     }
+
+
+
 
     //
     @Override
