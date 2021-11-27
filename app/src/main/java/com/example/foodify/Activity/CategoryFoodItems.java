@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodify.Adapter.FoodAdapter;
@@ -18,6 +20,7 @@ import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
 import com.example.foodify.Utils.DBHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -32,6 +35,8 @@ public class CategoryFoodItems extends AppCompatActivity {
     private RetrofitInterface service;
     RecyclerView recycler_food;
     RecyclerView.LayoutManager layoutManager;
+    TextView name,desc;
+    ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,34 +50,37 @@ public class CategoryFoodItems extends AppCompatActivity {
         recycler_food.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(this);
         recycler_food.setLayoutManager(layoutManager);
-//        cart=findViewById(R.id.view_cart);
-//        cart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Cursor res=DB.getData();
-//                StringBuffer buffer=new StringBuffer();
-//                if(res.getCount()==0)
-//                    Toast.makeText(CategoryFoodItems.this, "NO Data", Toast.LENGTH_SHORT).show();
-//               else
-//                {
-//
-//                    while (res.moveToNext()) {
-//                        buffer.append( " ID: "+res.getInt(0));
-//                        buffer.append(" Quantity: "+res.getInt(1));
-//                        buffer.append("\n");
-//
-//                    }
-//
-//                }
-//                AlertDialog.Builder builder=new AlertDialog.Builder(CategoryFoodItems.this);
-//               builder.setCancelable(true);
-//               builder.setTitle("Entries");
-//               builder.setMessage(buffer.toString());
-//               builder.show();
-//
-//
-//            }
-//        });
+        name=findViewById(R.id.title);
+        desc=findViewById(R.id.description);
+        image=findViewById(R.id.category_image);
+        cart=findViewById(R.id.cart);
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor res=DB.getData();
+                StringBuffer buffer=new StringBuffer();
+                if(res.getCount()==0)
+                    Toast.makeText(CategoryFoodItems.this, "NO Data", Toast.LENGTH_SHORT).show();
+               else
+                {
+
+                    while (res.moveToNext()) {
+                        buffer.append( " ID: "+res.getInt(0));
+                        buffer.append(" Quantity: "+res.getInt(1));
+                        buffer.append("\n");
+
+                    }
+
+                }
+                AlertDialog.Builder builder=new AlertDialog.Builder(CategoryFoodItems.this);
+               builder.setCancelable(true);
+               builder.setTitle("Entries");
+               builder.setMessage(buffer.toString());
+               builder.show();
+
+
+            }
+        });
 
         if(getIntent()!=null)
         {
@@ -96,9 +104,12 @@ public class CategoryFoodItems extends AppCompatActivity {
     }
 
     private void handleResponse(com.example.foodify.Model.CategoryById categoryById) {
-//        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
-//        food_name.setText(categoryById.getItems().get(0).getName());
+
         recycler_food.setAdapter(new FoodAdapter(categoryById));
+        name.setText(categoryById.getName());
+        desc.setText(categoryById.getDescription());
+        Picasso.with(this).load(categoryById.getImage()).into(image);
+
 
     }
 

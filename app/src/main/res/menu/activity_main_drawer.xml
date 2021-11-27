@@ -12,7 +12,7 @@
             android:id="@+id/cart"
             android:icon="@drawable/ic_baseline_shopping_cart_24"
             android:title="Cart" />
-        <item
+ee        <item
             android:id="@+id/navorders"
             android:icon="@drawable/ic_baseline_add_24"
             android:title="Orders" />
