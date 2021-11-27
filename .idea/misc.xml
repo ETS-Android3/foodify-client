@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/font/poppins.xml" value="0.40572916666666664" />
+        <entry key="app/src/main/res/font/sfrpo_text.xml" value="0.40572916666666664" />
         <entry key="app/src/main/res/layout/activity_food_list.xml" value="0.296195652173913" />
         <entry key="app/src/main/res/layout/add_item_quantity.xml" value="0.296195652173913" />
         <entry key="app/src/main/res/layout/category_item.xml" value="0.20697463768115942" />
-        <entry key="app/src/main/res/layout/food_item.xml" value="0.5593635250917993" />
+        <entry key="app/src/main/res/layout/food_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fooditem_by_category.xml" value="0.3070652173913043" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.16041666666666668" />
       </map>
     </option>
   </component>

@@ -1,5 +1,6 @@
 package com.example.foodify.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;

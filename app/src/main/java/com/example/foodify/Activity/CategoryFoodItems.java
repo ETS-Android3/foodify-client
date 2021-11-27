@@ -36,7 +36,7 @@ public class CategoryFoodItems extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_list);
+        setContentView(R.layout.fooditem_by_category);
 
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
@@ -45,34 +45,34 @@ public class CategoryFoodItems extends AppCompatActivity {
         recycler_food.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(this);
         recycler_food.setLayoutManager(layoutManager);
-        cart=findViewById(R.id.view_cart);
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Cursor res=DB.getData();
-                StringBuffer buffer=new StringBuffer();
-                if(res.getCount()==0)
-                    Toast.makeText(CategoryFoodItems.this, "NO Data", Toast.LENGTH_SHORT).show();
-               else
-                {
-
-                    while (res.moveToNext()) {
-                        buffer.append( " ID: "+res.getInt(0));
-                        buffer.append(" Quantity: "+res.getInt(1));
-                        buffer.append("\n");
-
-                    }
-
-                }
-                AlertDialog.Builder builder=new AlertDialog.Builder(CategoryFoodItems.this);
-               builder.setCancelable(true);
-               builder.setTitle("Entries");
-               builder.setMessage(buffer.toString());
-               builder.show();
-
-
-            }
-        });
+//        cart=findViewById(R.id.view_cart);
+//        cart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Cursor res=DB.getData();
+//                StringBuffer buffer=new StringBuffer();
+//                if(res.getCount()==0)
+//                    Toast.makeText(CategoryFoodItems.this, "NO Data", Toast.LENGTH_SHORT).show();
+//               else
+//                {
+//
+//                    while (res.moveToNext()) {
+//                        buffer.append( " ID: "+res.getInt(0));
+//                        buffer.append(" Quantity: "+res.getInt(1));
+//                        buffer.append("\n");
+//
+//                    }
+//
+//                }
+//                AlertDialog.Builder builder=new AlertDialog.Builder(CategoryFoodItems.this);
+//               builder.setCancelable(true);
+//               builder.setTitle("Entries");
+//               builder.setMessage(buffer.toString());
+//               builder.show();
+//
+//
+//            }
+//        });
 
         if(getIntent()!=null)
         {
