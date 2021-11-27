@@ -3,9 +3,9 @@ package com.example.foodify.Model;
 import java.util.ArrayList;
 
 public class BadRequestException {
-    Integer statusCode;
-    ArrayList<String> message;
-    String error;
+    private Integer statusCode;
+    private ArrayList<String> message;
+    private String error;
 
     public BadRequestException(Integer statusCode, ArrayList<String> message, String error) {
         this.statusCode = statusCode;

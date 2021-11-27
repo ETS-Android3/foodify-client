@@ -1,12 +1,12 @@
 package com.example.foodify.Model;
 
 public class FoodItem {
-String name;
-String id;
-String description;
-int price;
-String image;
-int calories;
+    private String name;
+    private String id;
+    private String description;
+    private int price;
+    private String image;
+    private int calories;
 
     public String getId() {
         return id;
@@ -49,11 +49,11 @@ int calories;
         this.description = description;
     }
 
-    public int  getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(int  price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -64,8 +64,6 @@ int calories;
     public void setCalories(int calories) {
         this.calories = calories;
     }
-
-
 
 
 }

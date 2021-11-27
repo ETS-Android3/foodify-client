@@ -7,7 +7,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkClient {
-    private static Retrofit instance;
+    public static Retrofit instance;
 
     public static Retrofit getInstance() {
         instance = new Retrofit.Builder().

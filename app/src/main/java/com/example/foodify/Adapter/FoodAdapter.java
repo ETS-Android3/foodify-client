@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,13 +28,16 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     private Context context;
     DBHelper DB;
     int quantity = 0;
+    int price = 0;
     ElegantNumberButton elegantNumberButton;
+
+    TextView popupDesc;
+    TextView popupTitle;
+    TextView popupPrice;
 
     public FoodAdapter(CategoryById array) {
         this.array = array;
         item = array.getItems();
-
-
     }
 
     @NonNull
@@ -42,46 +46,58 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item, parent, false);
         context = view.getContext();
         return new FoodViewHolder(view);
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
         holder.txtmenuname.setText(item.get(position).getName());
-        holder.txtmenuprice.setText(Integer.toString(item.get(position).getPrice()) + " $");
+        holder.txtmenuprice.setText(Integer.toString(item.get(position).getPrice()) + " ₹");
         holder.txtdesc.setText((item.get(position).getDescription()));
         DB = new DBHelper(context);
         Picasso.with(context).load(item.get(position).getImage()).into(holder.txtmenuimage);
         holder.add_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
+                price = item.get(position).getPrice();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setCancelable(true);
-                LayoutInflater inflater=LayoutInflater.from(context);
-                View view1=inflater.inflate(R.layout.add_item_quantity,null);
-                elegantNumberButton=view1.findViewById(R.id.quantity);
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View addQuantityDialog = inflater.inflate(R.layout.add_item_quantity, null);
+                elegantNumberButton = addQuantityDialog.findViewById(R.id.quantity);
+                popupTitle = addQuantityDialog.findViewById(R.id.popup_title);
+                popupDesc = addQuantityDialog.findViewById(R.id.item_desc);
+                popupPrice = addQuantityDialog.findViewById(R.id.popup_price);
 
-                builder.setView(view1)
+                popupTitle.setText(item.get(position).getName());
+                popupDesc.setText(item.get(position).getDescription());
+                popupPrice.setText(price+" ₹");
+
+                elegantNumberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                        if(newValue == 0){
+                            Toast.makeText(context, "Select atleast one quantity", Toast.LENGTH_SHORT).show();
+                        } else {
+                            price = (price/oldValue)*newValue;
+                            popupPrice.setText(price+" ₹");
+                        }
+                    }
+                });
+
+                builder.setView(addQuantityDialog)
                         .setPositiveButton("Add",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        int id= Integer.parseInt(item.get(position).getId());
+                                        int id = Integer.parseInt(item.get(position).getId());
 
-                                        String q=elegantNumberButton.getNumber();
-                                        quantity=Integer.parseInt(q);
-                                        Toast.makeText(context, q, Toast.LENGTH_SHORT).show();
-                                        Boolean checkinsert=DB.insertData(id,quantity);
-                                        if(checkinsert)
-                                        {
-                                            Toast.makeText(context, "Added Peacefuly", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else
-                                        {
+                                        String q = elegantNumberButton.getNumber();
+                                        quantity = Integer.parseInt(q);
+                                        Boolean checkinsert = DB.insertData(id, quantity);
 
+                                        if (checkinsert) {
+                                            Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
+                                        } else {
                                             Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -92,7 +108,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
                                     }
-
                                 });
                 builder.create();
                 builder.show();
@@ -101,8 +116,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         });
 
     }
-
-
 
 
     //

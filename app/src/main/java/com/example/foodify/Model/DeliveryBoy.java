@@ -3,9 +3,9 @@ package com.example.foodify.Model;
 import java.util.ArrayList;
 
 public class DeliveryBoy {
-    int id;
-    String name;
-    String phone;
+    private int id;
+    private String name;
+    private String phone;
 
     public int getId() {
         return id;

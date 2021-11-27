@@ -1,9 +1,9 @@
 package com.example.foodify.Model;
 
 public class RegisterData {
-    String name;
-    String phone;
-    String password;
+    private String name;
+    private String phone;
+    private String password;
 
     public RegisterData(String name, String phone, String password) {
         this.name = name;

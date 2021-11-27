@@ -9,7 +9,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,12 +39,14 @@ public class CategoryFoodItems extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     TextView name,desc;
     ImageView image;
+    Button cartButton;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fooditem_by_category);
-
+        progressBar = findViewById(R.id.loader);
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
         recycler_food=findViewById(R.id.recycler_food);
@@ -63,7 +67,6 @@ public class CategoryFoodItems extends AppCompatActivity {
                     Toast.makeText(CategoryFoodItems.this, "NO Data", Toast.LENGTH_SHORT).show();
                else
                 {
-
                     while (res.moveToNext()) {
                         buffer.append( " ID: "+res.getInt(0));
                         buffer.append(" Quantity: "+res.getInt(1));
@@ -77,7 +80,6 @@ public class CategoryFoodItems extends AppCompatActivity {
                builder.setTitle("Entries");
                builder.setMessage(buffer.toString());
                builder.show();
-
 
             }
         });
@@ -95,16 +97,15 @@ public class CategoryFoodItems extends AppCompatActivity {
                     .subscribe(this::handleResponse, this::handleError)
             );
         }
-
-
     }
 
     private void handleError(Throwable throwable) {
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     private void handleResponse(com.example.foodify.Model.CategoryById categoryById) {
-
+        progressBar.setVisibility(View.GONE);
         recycler_food.setAdapter(new FoodAdapter(categoryById));
         name.setText(categoryById.getName());
         desc.setText(categoryById.getDescription());

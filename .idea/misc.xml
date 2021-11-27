@@ -3,13 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.39166666666666666" />
         <entry key="app/src/main/res/font/poppins.xml" value="0.40572916666666664" />
         <entry key="app/src/main/res/font/sfrpo_text.xml" value="0.40572916666666664" />
+        <entry key="app/src/main/res/layout/activity_all_categories.xml" value="0.35054347826086957" />
         <entry key="app/src/main/res/layout/activity_food_list.xml" value="0.296195652173913" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24139492753623187" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.35054347826086957" />
         <entry key="app/src/main/res/layout/add_item_quantity.xml" value="0.296195652173913" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.35054347826086957" />
+        <entry key="app/src/main/res/layout/cart.xml" value="0.35054347826086957" />
         <entry key="app/src/main/res/layout/category_item.xml" value="0.20697463768115942" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.35054347826086957" />
         <entry key="app/src/main/res/layout/food_item.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/fooditem_by_category.xml" value="0.3070652173913043" />
+        <entry key="app/src/main/res/layout/fooditem_by_category.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.35054347826086957" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.16041666666666668" />
       </map>
     </option>

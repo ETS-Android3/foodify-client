@@ -100,8 +100,6 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
         return true;
     }
 

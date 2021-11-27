@@ -1,8 +1,8 @@
 package com.example.foodify.Model;
 
 public class LoginData {
-    String phone;
-    String password;
+    private String phone;
+    private String password;
 
     public LoginData(String phone, String password) {
         this.phone = phone;
