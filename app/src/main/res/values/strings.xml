@@ -4,4 +4,6 @@
     <string name="landingPageImageDesc">LandingPage</string>
     <string name="SignInWithPhone">Log In With Phone</string>
     <string name="SignInPromptText">Get started by signing in below</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
 </resources>
