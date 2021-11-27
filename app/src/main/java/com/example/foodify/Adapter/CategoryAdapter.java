@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +16,7 @@ import com.example.foodify.Model.Category;
 import com.example.foodify.R;
 import com.example.foodify.ViewHolder.CategoryViewHolder;
 import com.squareup.picasso.Picasso;
-import com.example.foodify.Activity.CategoryById;
+import com.example.foodify.Activity.CategoryFoodItems;
 
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 Log.d("Category",item.getId());
-                Intent list=new Intent(context,com.example.foodify.Activity.CategoryById.class);
+                Intent list=new Intent(context, CategoryFoodItems.class);
                 list.putExtra("categoryId",item.getId());
                 context.startActivity(list);
 

@@ -9,11 +9,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foodify.Adapter.CategoryAdapter;
 import com.example.foodify.Adapter.FoodAdapter;
 import com.example.foodify.Model.Category;
 import com.example.foodify.R;
@@ -21,16 +18,13 @@ import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
 import com.example.foodify.Utils.DBHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class CategoryById extends AppCompatActivity {
+public class CategoryFoodItems extends AppCompatActivity {
     String categoryId="";
     FloatingActionButton cart;
     DBHelper DB;
@@ -58,7 +52,7 @@ public class CategoryById extends AppCompatActivity {
                 Cursor res=DB.getData();
                 StringBuffer buffer=new StringBuffer();
                 if(res.getCount()==0)
-                    Toast.makeText(CategoryById.this, "NO Data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CategoryFoodItems.this, "NO Data", Toast.LENGTH_SHORT).show();
                else
                 {
 
@@ -70,7 +64,7 @@ public class CategoryById extends AppCompatActivity {
                     }
 
                 }
-                AlertDialog.Builder builder=new AlertDialog.Builder(CategoryById.this);
+                AlertDialog.Builder builder=new AlertDialog.Builder(CategoryFoodItems.this);
                builder.setCancelable(true);
                builder.setTitle("Entries");
                builder.setMessage(buffer.toString());
@@ -107,10 +101,5 @@ public class CategoryById extends AppCompatActivity {
         recycler_food.setAdapter(new FoodAdapter(categoryById));
 
     }
-
-
-
-
-
 
 }
