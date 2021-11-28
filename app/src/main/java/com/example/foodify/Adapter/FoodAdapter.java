@@ -89,16 +89,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        int id = Integer.parseInt(item.get(position).getId());
+                                        int itemId = Integer.parseInt(item.get(position).getId());
+                                        int price = item.get(position).getPrice();
+                                        String image = item.get(position).getImage();
+                                        String name = item.get(position).getName();
+                                        String description = item.get(position).getDescription();
+                                        quantity = Integer.parseInt(elegantNumberButton.getNumber());
 
-                                        String q = elegantNumberButton.getNumber();
-                                        quantity = Integer.parseInt(q);
-                                        Boolean checkinsert = DB.insertData(id, quantity);
-
-                                        if (checkinsert) {
-                                            Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
-                                        } else {
+                                        if(DB.getExistingItem(itemId)) {
+                                            DB.updateItem(itemId, quantity);
                                             Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            DB.insertData(itemId, quantity, image, name, description, price);
+                                            Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 })

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -13,51 +14,62 @@ import com.example.foodify.Adapter.FoodAdapter;
 public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
-        super(context, "CartData.db", null,1);
+        super(context, "CartData.db", null, 1);
     }
+    private String tableName = "cart";
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
-        DB.execSQL("create table CartDetails(itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null)");
-
+        DB.execSQL("drop table if exists cart");
+        DB.execSQL("create table cart (itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
-        DB.execSQL("drop table if exists CartDetails");
-
+        DB.execSQL("drop table if exists cart");
+        DB.execSQL("create table cart (itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer)");
     }
-    public Boolean insertData(int id,int quantity)
-    {
-            long result=-1;
-            SQLiteDatabase DB=this.getWritableDatabase();
-            Cursor cursor=DB.rawQuery("select * from CartDetails where itemId=?",new String[]{Integer.toString(id)});
 
+    public void insertData(int id, int quantity, String image, String name, String description, int price) {
+        SQLiteDatabase DB = this.getWritableDatabase();
 
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("itemId", id);
-            contentValues.put("quantity", quantity);
-        if(cursor.getCount()==0) {
-             result = DB.insert("CartDetails", null, contentValues);
-        }
-        else
-        {
-            DB.update("CartDetails",contentValues,"itemId=?",new String[]{Integer.toString(id)});
-        }
-        if(result==-1)
-            return false;
-        else
-            return true;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("itemId", id);
+        contentValues.put("quantity", quantity);
+        contentValues.put("name", name);
+        contentValues.put("description", description);
+        contentValues.put("price", price);
+        contentValues.put("image", image);
+        long result = DB.insert("cart", null, contentValues);
     }
-    public void deleteCart()
-    {
-        SQLiteDatabase DB=this.getWritableDatabase();
-        DB.rawQuery("delete from CartDetails",null);
+
+    public void updateItem(int itemId, int quantity){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("itemId", itemId);
+        SQLiteDatabase DB = this.getWritableDatabase();
+        DB.update("cart", contentValues, "itemId=?", new String[]{Integer.toString(itemId)});
     }
-    public Cursor getData()
-    {
-        SQLiteDatabase database=this.getWritableDatabase();
-        Cursor cursor=database.rawQuery("select * from CartDetails",null);
+
+    public Boolean getExistingItem(int itemId){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor cursor = DB.rawQuery("select * from cart where itemId=?", new String[]{Integer.toString(itemId)});
+
+        if(cursor.getCount() == 0) return false;
+        else return true;
+    }
+
+    public void deleteCart() {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        DB.rawQuery("delete from cart", null);
+    }
+
+    public Cursor getCartData() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("select * from cart", null);
         return cursor;
+    }
+
+    private void createCartTable(SQLiteDatabase DB) {
+        DB.execSQL("create table cart(itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer)");
     }
 }

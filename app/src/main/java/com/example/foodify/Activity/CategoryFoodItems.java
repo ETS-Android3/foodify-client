@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodify.Adapter.FoodAdapter;
-import com.example.foodify.Model.Category;
 import com.example.foodify.R;
 import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
@@ -61,7 +60,7 @@ public class CategoryFoodItems extends AppCompatActivity {
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cursor res=DB.getData();
+                Cursor res=DB.getCartData();
                 StringBuffer buffer=new StringBuffer();
                 if(res.getCount()==0)
                     Toast.makeText(CategoryFoodItems.this, "NO Data", Toast.LENGTH_SHORT).show();
@@ -71,7 +70,6 @@ public class CategoryFoodItems extends AppCompatActivity {
                         buffer.append( " ID: "+res.getInt(0));
                         buffer.append(" Quantity: "+res.getInt(1));
                         buffer.append("\n");
-
                     }
 
                 }
