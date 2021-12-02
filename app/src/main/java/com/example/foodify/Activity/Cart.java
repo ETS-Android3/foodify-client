@@ -57,29 +57,40 @@ public class Cart extends AppCompatActivity {
         layoutManager=new LinearLayoutManager(this);
         recycler_cart.setLayoutManager(layoutManager);
         SendCart=findViewById(R.id.sendcart);
-
+        Cursor items=DB.getCartData();
+        if(items.getCount()==0)
+        {
+            SendCart.setVisibility(View.INVISIBLE);
+        }
         SendCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                CartItemSent cartItemSents=new CartItemSent();
                 ArrayList<CartSent>cartSents=new ArrayList<CartSent>();
                 Cursor items=DB.getCartData();
-                while(items.moveToNext())
-                {
-                    CartSent s=new CartSent();
-                    s.setItemId(items.getString(items.getColumnIndex("itemId")));
-                    s.setQuantity(Integer.parseInt(items.getString(items.getColumnIndex("quantity"))));
-                    cartSents.add(s);
+                if(items.getCount()==0) {
+                    Toast.makeText(Cart.this, "Please Add Items to Cart", Toast.LENGTH_SHORT).show();
 
                 }
-                cartItemSents.setOrderItem(cartSents);
-                cartItemSents.setPrice(0);
-                cartItemSents.setCalories(1);
-                compositeDisposable.add(service.placeorder(cartItemSents, token)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::handleResponse, this::handleError)
-                );
+
+                else {
+                    while (items.moveToNext()) {
+                        CartSent s = new CartSent();
+                        s.setItemId(items.getString(items.getColumnIndex("itemId")));
+                        s.setQuantity(Integer.parseInt(items.getString(items.getColumnIndex("quantity"))));
+                        cartSents.add(s);
+
+                    }
+
+                    cartItemSents.setOrderItem(cartSents);
+                    cartItemSents.setPrice(0);
+                    cartItemSents.setCalories(1);
+                    compositeDisposable.add(service.placeorder(cartItemSents, token)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(this::handleResponse, this::handleError)
+                    );
+                }
 
 
 
@@ -103,26 +114,27 @@ public class Cart extends AppCompatActivity {
             }
 
             private void handleResponse(AuthRespose authRespose) {
-                Toast.makeText(Cart.this, "tmkc", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Cart.this, "Order Placed", Toast.LENGTH_SHORT).show();
             }
         });
 
         ArrayList<FoodItem>cartItems=new ArrayList<FoodItem>();
-        Cursor items=DB.getCartData();
-        while(items.moveToNext())
-        {
-            FoodItem food=new FoodItem();
-            food.setId(items.getString(items.getColumnIndex("itemId")));
-            food.setCalories(0);
+//        Cursor items=DB.getCartData();
+        if(items.getCount()>0) {
+            while (items.moveToNext()) {
+                FoodItem food = new FoodItem();
+                food.setId(items.getString(items.getColumnIndex("itemId")));
+                food.setCalories(0);
 //            food.setCategoryId();
-            food.setDescription(items.getString(items.getColumnIndex("description")));
-            food.setImage(items.getString(items.getColumnIndex("image")));
-            food.setPrice(Integer.parseInt(items.getString(items.getColumnIndex("price"))));
-            food.setName(items.getString(items.getColumnIndex("name")));
-            cartItems.add(food);
+                food.setDescription(items.getString(items.getColumnIndex("description")));
+                food.setImage(items.getString(items.getColumnIndex("image")));
+                food.setPrice(Integer.parseInt(items.getString(items.getColumnIndex("price"))));
+                food.setName(items.getString(items.getColumnIndex("name")));
+                cartItems.add(food);
 
+            }
+            recycler_cart.setAdapter(new FoodAdapter(cartItems));
         }
-        recycler_cart.setAdapter(new FoodAdapter(cartItems));
 
     }
 }

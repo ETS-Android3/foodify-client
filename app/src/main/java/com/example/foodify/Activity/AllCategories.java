@@ -19,6 +19,7 @@ import com.example.foodify.Model.Category;
 import com.example.foodify.R;
 import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
+import com.example.foodify.Utils.DBHelper;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
     DrawerLayout drawerLayout;
     RecyclerView recycler_menu;
     RecyclerView.LayoutManager layoutManager;
+    DBHelper DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.activity_all_categories);
         drawerLayout=findViewById(R.id.drawer_layout);
         toolbar=findViewById(R.id.toolbar);
-
+        DB=new DBHelper(this);
 //        toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -108,6 +110,14 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
         {
             Intent intent=new Intent(AllCategories.this, UserProfile.class);
             startActivity(intent);
+        }
+        if(id==R.id.logout)
+        {
+            DB.deleteCart();
+            DB.deleteUser();
+            Intent intent=new Intent(AllCategories.this,Login.class);
+            startActivity(intent);
+
         }
         return true;
     }

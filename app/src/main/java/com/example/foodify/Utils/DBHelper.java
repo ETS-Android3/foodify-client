@@ -68,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void deleteCart() {
         SQLiteDatabase DB = this.getWritableDatabase();
-        DB.rawQuery("delete from cart", null);
+        DB.delete("cart",null,null);
     }
 
     public Cursor getCartData() {
@@ -105,4 +105,10 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = database.rawQuery("select * from userDetails", null);
         return cursor;
     }
+    public void deleteUser()
+    {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        DB.delete("userDetails",null,null);
+    }
+
 }
