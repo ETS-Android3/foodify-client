@@ -106,11 +106,7 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
             Intent intent=new Intent(AllCategories.this,Cart.class);
             startActivity(intent);
         }
-        if(id==R.id.user)
-        {
-            Intent intent=new Intent(AllCategories.this, UserProfile.class);
-            startActivity(intent);
-        }
+
         if(id==R.id.logout)
         {
             DB.deleteCart();

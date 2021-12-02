@@ -107,6 +107,7 @@ public class Login extends AppCompatActivity {
     private void handleResponse(AuthRespose authRespose) {
         progressBar.setVisibility(View.GONE);
         DB.insertDetails(1,authRespose.getToken(),authRespose.getUserId());
+        Common.token=authRespose.getToken();
         Intent intent=new Intent(Login.this,AllCategories.class);
         startActivity(intent);
     }

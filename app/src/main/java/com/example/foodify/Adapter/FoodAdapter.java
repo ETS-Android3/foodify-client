@@ -57,11 +57,22 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         holder.txtmenuname.setText(item.get(position).getName());
         holder.txtmenuprice.setText(Integer.toString(item.get(position).getPrice()) + " ₹");
         holder.txtdesc.setText((item.get(position).getDescription()));
+
         DB = new DBHelper(context);
         Picasso.with(context).load(item.get(position).getImage()).into(holder.txtmenuimage);
-//        holder.add_item.setText(Integer.parseInt(DB.getQuantity(Integer.parseInt(item.get(position).getId()))));
-//        quantity=Integer.parseInt(DB.getQuantity(1));
-//        DB.getQuantity(1);
+        Cursor c=DB.getExistingItemData(Integer.parseInt(item.get(position).getId()));
+        int count = c.getColumnCount();
+        String details="";
+        if(c.moveToFirst())
+        {
+            do
+            {
+                quantity=Integer.parseInt(c.getString(1));
+                Log.d("Quantity", String.valueOf(quantity));
+            }
+            while(c.moveToNext());
+        }
+
         if(quantity>0)
             holder.add_item.setText(Integer.toString(quantity));
         holder.add_item.setOnClickListener(new View.OnClickListener() {
@@ -102,15 +113,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         int itemId = Integer.parseInt(item.get(position).getId());
-
                                         String image = item.get(position).getImage();
                                         String name = item.get(position).getName();
                                         String description = item.get(position).getDescription();
                                         quantity = Integer.parseInt(elegantNumberButton.getNumber());
 
-                                        int price = item.get(position).getPrice()*quantity;
+                                        int price = item.get(position).getPrice();
                                         Log.d("Price is ",Integer.toString(price));
-                                        int calories=item.get(position).getCalories()*quantity;
+                                        int calories=item.get(position).getCalories();
                                         if(DB.getExistingItem(itemId)) {
                                             DB.updateItem(itemId, quantity,price,calories);
                                             Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
@@ -149,5 +159,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public int getItemCount() {
         return item.size();
     }
+    public void removeItem(int position)
+    {
+
+    }
+
 
 }

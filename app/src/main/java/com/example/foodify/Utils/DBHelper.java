@@ -77,7 +77,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getExistingItemData(int itemId){
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor cursor = DB.rawQuery("select * from cart where itemId=?", new String[]{Integer.toString(itemId)});
-
        return cursor;
     }
 
@@ -112,15 +111,7 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor items=DB.rawQuery("select * from cart where itemId=?",new String[]{Integer.toString(id)});
-        StringBuilder sb = new StringBuilder();
-        int columnsQty = items.getColumnCount();
-        for (int idx=0; idx<columnsQty; ++idx) {
-            sb.append(items.getString(idx));
-            if (idx < columnsQty - 1)
-                sb.append("; ");
-        }
-        Log.v("Quanitity is", String.format("Row: %d, Values: %s", items.getPosition(),
-                sb.toString()));
+
 
 
     }

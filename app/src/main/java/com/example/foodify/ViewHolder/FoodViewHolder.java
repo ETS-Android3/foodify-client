@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodify.Interface.ItemClickListener;
@@ -15,12 +16,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.travijuu.numberpicker.library.NumberPicker;
 
 
-public class FoodViewHolder extends RecyclerView.ViewHolder {
+public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
     public TextView txtmenuname;
     public TextView txtmenuprice;
     public TextView txtdesc;
     public ImageView txtmenuimage;
     public Button add_item;
+    public CardView cardView;
 //    private ItemClickListener itemClickListener;
 
     public FoodViewHolder(@NonNull View itemView) {
@@ -30,18 +32,16 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
         txtmenuname = (TextView) itemView.findViewById(R.id.food_name);
         txtdesc = (TextView) itemView.findViewById(R.id.textView2);
         add_item = (Button) itemView.findViewById(R.id.add_food);
+        cardView=itemView.findViewById(R.id.foodCardView);
+        cardView.setOnCreateContextMenuListener(this);
 
 //        itemView.setOnClickListener(this);
     }
 
-//    public void setItemClickListener(ItemClickListener itemClickListener) {
-//        this.itemClickListener = itemClickListener;
-//    }
-////
-//    @Override
-//    public void onClick(View v) {
-//        itemClickListener.onClick(v, getAdapterPosition(), false);
-//    }
 
-
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+        menu.setHeaderTitle("Select Action");
+        menu.add(0,0,getAdapterPosition(), "DELETE");
+    }
 }

@@ -58,30 +58,7 @@ public class CategoryFoodItems extends AppCompatActivity {
         desc=findViewById(R.id.description);
         image=findViewById(R.id.category_image);
         cart=findViewById(R.id.cart);
-//        cart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Cursor res=DB.getCartData();
-//                StringBuffer buffer=new StringBuffer();
-//                if(res.getCount()==0)
-//                    Toast.makeText(CategoryFoodItems.this, "NO Data", Toast.LENGTH_SHORT).show();
-//               else
-//                {
-//                    while (res.moveToNext()) {
-//                        buffer.append( " ID: "+res.getInt(0));
-//                        buffer.append(" Quantity: "+res.getInt(1));
-//                        buffer.append("\n");
-//                    }
-//
-//                }
-//                AlertDialog.Builder builder=new AlertDialog.Builder(CategoryFoodItems.this);
-//               builder.setCancelable(true);
-//               builder.setTitle("Entries");
-//               builder.setMessage(buffer.toString());
-//               builder.show();
-//
-//            }
-//        });
+
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -9,7 +9,7 @@
         android:id="@+id/include"
         layout="@layout/activity_food_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="600dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
@@ -38,11 +38,13 @@
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="18dp"
-        android:text="Place Order"
+        android:text="Continue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />\
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 
 
 

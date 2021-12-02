@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -83,8 +85,10 @@ String token=Common.token;
                         s.setItemId(items.getString(items.getColumnIndex("itemId")));
                         s.setQuantity(quantity);
                         cartSents.add(s);
-                        price+=Integer.parseInt(items.getString(items.getColumnIndex("price")));
-                        calories+=Integer.parseInt(items.getString(items.getColumnIndex("calories")));
+                        price+=Integer.parseInt(items.getString(items.getColumnIndex("price")))*quantity;
+                        calories+=Integer.parseInt(items.getString(items.getColumnIndex("calories")))*quantity;
+                        Log.d("Price", String.valueOf(price));
+                        Log.d("Calories", String.valueOf(calories));
 
                     }
 
@@ -120,8 +124,9 @@ String token=Common.token;
             }
 
             private void handleResponse(AuthRespose authRespose) {
-                Toast.makeText(Cart.this, "Order Placed", Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(Cart.this,orderSuccess.class);
+                Intent intent=new Intent(Cart.this,Checkout.class);
+                intent.putExtra("totalprice",Integer.toString(price));
+                intent.putExtra("totalcalories",Integer.toString(calories));
                 startActivity(intent);
             }
         });
@@ -154,5 +159,22 @@ String token=Common.token;
 
         }
 
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getTitle().equals("DELETE"))
+        {
+            displayMessage("Item Deleted");
+
+            return true;
+        }
+        else
+        return super.onContextItemSelected(item);
+    }
+
+    private void displayMessage(String item_deleted) {
+        Toast.makeText(this, "Item Deleted", Toast.LENGTH_SHORT).show();
     }
 }

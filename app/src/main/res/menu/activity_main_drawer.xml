@@ -20,9 +20,6 @@ ee        <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_baseline_person_24"
             android:title="Log Out" />
-        <item
-            android:id="@+id/user"
-            android:icon="@drawable/ic_baseline_person_24"
-            android:title="Profile" />
+
     </group>
 </menu>
