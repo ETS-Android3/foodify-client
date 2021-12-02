@@ -3,6 +3,7 @@ package com.example.foodify;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.example.foodify.Model.BadRequestException;
 import com.example.foodify.Model.User;
 import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
+import com.example.foodify.Utils.DBHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -32,6 +34,8 @@ public class SplashScreen extends AppCompatActivity {
     private RetrofitInterface service;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     LottieAnimationView lottieAnimationView;
+    DBHelper DB;
+    String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +43,35 @@ public class SplashScreen extends AppCompatActivity {
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
         lottieAnimationView=findViewById(R.id.animationview);
+        DB=new DBHelper(this);
 
-        Paper.init(this);
+//        Paper.init(this);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 //                Log.d("Token",Common.token);
-                String token = Paper.book().read(Common.token);
+//                String token = Paper.book().read(Common.token);
 
+                Cursor cursor=DB.getUserData();
+                if (cursor.moveToFirst()) {
+                    do {
+                        StringBuilder sb = new StringBuilder();
+                        int columnsQty = cursor.getColumnCount();
+                        for (int idx=0; idx<columnsQty; ++idx) {
+                            sb.append(cursor.getString(idx));
+                            if (idx < columnsQty - 1)
+                                sb.append("; ");
+                        }
+                        Log.v("Print", String.format("Row: %d, Values: %s", cursor.getPosition(),
+                                sb.toString()));
+                        token=cursor.getString(1);
+                    } while (cursor.moveToNext());
+                }
+
+//                if(c.getCount()>0) {
+////                if(c.getCount()==0)
+//                     token = c.getString(1);
+//                }
                 if (token != null) {
                     if (!token.isEmpty())
                         loginuser(token);

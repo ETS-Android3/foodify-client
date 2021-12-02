@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:id="@+id/progress_bar"
+    android:scrollbars="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:text="Jatin Mangla"
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,6 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
+        android:text="Hello"
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,23 +40,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/category_image" />
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/activity_food_list"
+<!--    <include-->
+<!--        android:id="@+id/include"-->
+<!--        layout="@layout/activity_food_list"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/description"-->
+<!--        app:layout_constraintVertical_bias="0.0"/>-->
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/recycler_food"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="450dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="14dp"
+
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:layout_constraintVertical_bias="0.0"></androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="18dp"
+
         android:layout_marginBottom="18dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"

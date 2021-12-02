@@ -1,6 +1,7 @@
 package com.example.foodify.Retrofit;
 
 import com.example.foodify.Model.AuthRespose;
+import com.example.foodify.Model.CartItemSent;
 import com.example.foodify.Model.Category;
 import com.example.foodify.Model.CategoryById;
 import com.example.foodify.Model.FoodItem;
@@ -34,4 +35,7 @@ public interface RetrofitInterface {
 
     @GET("category/{id}")
     Observable<CategoryById>allFood(@Path("id") String id);
+
+    @POST("order")
+    Observable<AuthRespose>placeorder(@Body CartItemSent cartItemSent,@Header("accesstoken")String token);
 }

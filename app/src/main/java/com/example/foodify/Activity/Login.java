@@ -20,6 +20,7 @@ import com.example.foodify.Model.LoginData;
 import com.example.foodify.R;
 import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
+import com.example.foodify.Utils.DBHelper;
 import com.example.foodify.Utils.Validation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,6 +42,7 @@ public class Login extends AppCompatActivity {
     private EditText phoneText, passwordText;
     private Button loginButton;
     private ProgressBar progressBar;
+    DBHelper DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class Login extends AppCompatActivity {
         progressBar=findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.GONE);
         Paper.init(this);
+        DB=new DBHelper(this);
 
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
@@ -103,7 +106,7 @@ public class Login extends AppCompatActivity {
 
     private void handleResponse(AuthRespose authRespose) {
         progressBar.setVisibility(View.GONE);
-        Paper.book().write(Common.token,authRespose.getToken());
+        DB.insertDetails(1,authRespose.getToken(),authRespose.getUserId());
         Intent intent=new Intent(Login.this,AllCategories.class);
         startActivity(intent);
     }

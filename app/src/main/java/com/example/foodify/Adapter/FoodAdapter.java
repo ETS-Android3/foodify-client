@@ -2,6 +2,7 @@ package com.example.foodify.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,21 +24,22 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import java.util.ArrayList;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
-    CategoryById array;
+//    CategoryById array;
     ArrayList<FoodItem> item;
     private Context context;
     DBHelper DB;
     int quantity = 0;
     int price = 0;
     ElegantNumberButton elegantNumberButton;
+//    Cursor data;
 
     TextView popupDesc;
     TextView popupTitle;
     TextView popupPrice;
 
-    public FoodAdapter(CategoryById array) {
-        this.array = array;
-        item = array.getItems();
+    public FoodAdapter(ArrayList<FoodItem> foodItems) {
+        this.item=foodItems;
+
     }
 
     @NonNull
@@ -72,6 +74,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                 popupDesc.setText(item.get(position).getDescription());
                 popupPrice.setText(price+" ₹");
 
+
                 elegantNumberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
                     @Override
                     public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
@@ -80,7 +83,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                         } else {
                             price = (price/oldValue)*newValue;
                             popupPrice.setText(price+" ₹");
+
                         }
+
                     }
                 });
 
@@ -90,19 +95,23 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         int itemId = Integer.parseInt(item.get(position).getId());
-                                        int price = item.get(position).getPrice();
+
                                         String image = item.get(position).getImage();
                                         String name = item.get(position).getName();
                                         String description = item.get(position).getDescription();
                                         quantity = Integer.parseInt(elegantNumberButton.getNumber());
 
+                                        int price = item.get(position).getPrice()*quantity;
+
                                         if(DB.getExistingItem(itemId)) {
-                                            DB.updateItem(itemId, quantity);
+                                            DB.updateItem(itemId, quantity,price);
                                             Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
                                         } else {
                                             DB.insertData(itemId, quantity, image, name, description, price);
                                             Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
                                         }
+
+//                                         data=DB.getExistingItemData(itemId);
                                     }
                                 })
                         .setNegativeButton("Cancel",
@@ -112,13 +121,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                                         dialog.dismiss();
                                     }
                                 });
+//                holder.add_item.setText("Ordered");
+//                holder.add_item.setText(data.getString(data.getColumnIndex("price")));
                 builder.create();
                 builder.show();
+
+
 
             }
         });
 
+//        holder.add_item.setText(Integer.toString(quantity));
     }
+
 
 
     //

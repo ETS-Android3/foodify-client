@@ -104,7 +104,7 @@ public class CategoryFoodItems extends AppCompatActivity {
 
     private void handleResponse(com.example.foodify.Model.CategoryById categoryById) {
         progressBar.setVisibility(View.GONE);
-        recycler_food.setAdapter(new FoodAdapter(categoryById));
+        recycler_food.setAdapter(new FoodAdapter(categoryById.getItems()));
         name.setText(categoryById.getName());
         desc.setText(categoryById.getDescription());
         Picasso.with(this).load(categoryById.getImage()).into(image);

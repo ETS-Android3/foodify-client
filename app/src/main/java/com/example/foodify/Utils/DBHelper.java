@@ -22,13 +22,19 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase DB) {
         DB.execSQL("drop table if exists cart");
         DB.execSQL("create table cart (itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer)");
+        DB.execSQL("drop table if exists userDetails");
+        DB.execSQL("create table userDetails(id INTEGER primary key autoincrement not null,accesstoken varchar,userId INTEGER UNIQUE)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
         DB.execSQL("drop table if exists cart");
+
         DB.execSQL("create table cart (itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer)");
+        DB.execSQL("drop table if exists userDetails");
+        DB.execSQL("create table userDetails(id INTEGER primary key autoincrement not null,accesstoken varchar,userId INTEGER UNIQUE)");
     }
+
 
     public void insertData(int id, int quantity, String image, String name, String description, int price) {
         SQLiteDatabase DB = this.getWritableDatabase();
@@ -43,9 +49,11 @@ public class DBHelper extends SQLiteOpenHelper {
         long result = DB.insert("cart", null, contentValues);
     }
 
-    public void updateItem(int itemId, int quantity){
+    public void updateItem(int itemId, int quantity,int price){
         ContentValues contentValues = new ContentValues();
         contentValues.put("itemId", itemId);
+        contentValues.put("quantity",quantity);
+        contentValues.put("price",price);
         SQLiteDatabase DB = this.getWritableDatabase();
         DB.update("cart", contentValues, "itemId=?", new String[]{Integer.toString(itemId)});
     }
@@ -68,8 +76,33 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = database.rawQuery("select * from cart", null);
         return cursor;
     }
+    public Cursor getExistingItemData(int itemId){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor cursor = DB.rawQuery("select * from cart where itemId=?", new String[]{Integer.toString(itemId)});
+
+       return cursor;
+    }
+
 
     private void createCartTable(SQLiteDatabase DB) {
         DB.execSQL("create table cart(itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer)");
+    }
+    private void createUserDetail(SQLiteDatabase DB)
+    {
+        DB.execSQL("create table userDetails(id INTEGER primary key autoincrement not null,accesstoken varchar,userId INTEGER UNIQUE)");
+    }
+    public void insertDetails(int id,String accesstoken,int userId)
+    {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id",id);
+        contentValues.put("accesstoken",accesstoken);
+        contentValues.put("userId",userId);
+        DB.insert("userDetails",null,contentValues);
+    }
+    public Cursor getUserData() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("select * from userDetails", null);
+        return cursor;
     }
 }

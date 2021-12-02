@@ -1,7 +1,6 @@
 package com.example.foodify.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -100,6 +98,17 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if(id==R.id.cart)
+        {
+            Intent intent=new Intent(AllCategories.this,Cart.class);
+            startActivity(intent);
+        }
+        if(id==R.id.user)
+        {
+            Intent intent=new Intent(AllCategories.this, UserProfile.class);
+            startActivity(intent);
+        }
         return true;
     }
 
