@@ -62,6 +62,18 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         Picasso.with(context).load(item.get(position).getImage()).into(holder.txtmenuimage);
         Cursor c=DB.getExistingItemData(Integer.parseInt(item.get(position).getId()));
         int count = c.getColumnCount();
+        int id=0;
+        if(c.moveToFirst())
+        {
+            do
+            {
+                 id=Integer.parseInt(c.getString(2));
+//                Log.d("Quantity", String.valueOf(quantity));
+            }
+            while(c.moveToNext());
+        }
+        Log.d("Id", String.valueOf(id));
+        holder.itemView.setTag(id);
         String details="";
         if(c.moveToFirst())
         {
@@ -159,10 +171,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public int getItemCount() {
         return item.size();
     }
-    public void removeItem(int position)
-    {
 
-    }
 
 
 }

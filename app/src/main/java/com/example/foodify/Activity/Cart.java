@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +48,8 @@ public class Cart extends AppCompatActivity {
     int price=0;
     int calories=0;
 //    String token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlzU3RhZmYiOmZhbHNlLCJ1c2VySWQiOjF9LCJpYXQiOjE2MzgxMzYwMDF9._VH8jLlncuo3_3D8sOztquW55YNtUeWSHtCCE7m6g1I";
-String token=Common.token;
+  String token=Common.token;
+    Cursor items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ String token=Common.token;
         layoutManager=new LinearLayoutManager(this);
         recycler_cart.setLayoutManager(layoutManager);
         SendCart=findViewById(R.id.sendcart);
-        Cursor items=DB.getCartData();
+         items=DB.getCartData();
         Log.d("Token is", Common.token);
         if(items.getCount()==0)
         {
@@ -79,12 +81,16 @@ String token=Common.token;
                 }
 
                 else {
+                    price=calories=0;
+
+                    
                     while (items.moveToNext()) {
                         CartSent s = new CartSent();
                         int quantity=Integer.parseInt(items.getString(items.getColumnIndex("quantity")));
                         s.setItemId(items.getString(items.getColumnIndex("itemId")));
                         s.setQuantity(quantity);
                         cartSents.add(s);
+
                         price+=Integer.parseInt(items.getString(items.getColumnIndex("price")))*quantity;
                         calories+=Integer.parseInt(items.getString(items.getColumnIndex("calories")))*quantity;
                         Log.d("Price", String.valueOf(price));
@@ -149,10 +155,30 @@ String token=Common.token;
                 Log.v("Print", String.format("Row: %d, Values: %s", items.getPosition(),
                         sb.toString()));
             }
+
             recycler_cart.setAdapter(new FoodAdapter(cartItems));
+
+            new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT) {
+                @Override
+                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                    return false;
+                }
+
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                        cartItems.remove(viewHolder.getAdapterPosition());
+                        removeItem((Integer) viewHolder.itemView.getTag());
+                        new FoodAdapter(cartItems).notifyDataSetChanged();
+                }
+            }).attachToRecyclerView(recycler_cart);
 
         }
 
+
+    }
+
+    private void removeItem(int tag) {
+        DB.removeItem(tag);
 
     }
 
@@ -161,7 +187,6 @@ String token=Common.token;
         if (item.getTitle().equals("DELETE"))
         {
             displayMessage("Item Deleted");
-
             return true;
         }
         else
@@ -171,4 +196,5 @@ String token=Common.token;
     private void displayMessage(String item_deleted) {
         Toast.makeText(this, "Item Deleted", Toast.LENGTH_SHORT).show();
     }
+
 }

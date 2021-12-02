@@ -111,9 +111,11 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor items=DB.rawQuery("select * from cart where itemId=?",new String[]{Integer.toString(id)});
-
-
-
+    }
+    public void removeItem(int id)
+    {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        DB.execSQL("delete from cart where id=?",new String[]{Integer.toString(id)});
     }
 
 

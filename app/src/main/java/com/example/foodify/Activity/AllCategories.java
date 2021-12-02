@@ -101,6 +101,11 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
+        if(id==R.id.nav_home)
+        {
+            Intent intent=new Intent(AllCategories.this,AllCategories.class);
+            startActivity(intent);
+        }
         if(id==R.id.cart)
         {
             Intent intent=new Intent(AllCategories.this,Cart.class);

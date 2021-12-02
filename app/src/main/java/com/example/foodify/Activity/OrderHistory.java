@@ -75,6 +75,7 @@ String token= Common.token;
     }
 
     private void handleResponse(ArrayList<com.example.foodify.Model.OrderHistory> categories) {
+        Log.d("History", String.valueOf(categories.size()));
         recycler_history.setAdapter(new HistoryAdapter(categories));
     }
 }
