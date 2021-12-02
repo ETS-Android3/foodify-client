@@ -10,10 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodify.Interface.ItemClickListener;
 import com.example.foodify.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.travijuu.numberpicker.library.NumberPicker;
 
 
 public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
@@ -28,9 +25,9 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCr
     public FoodViewHolder(@NonNull View itemView) {
         super(itemView);
         txtmenuimage = (ImageView) itemView.findViewById(R.id.food_img);
-        txtmenuprice = (TextView) itemView.findViewById(R.id.food_price);
-        txtmenuname = (TextView) itemView.findViewById(R.id.food_name);
-        txtdesc = (TextView) itemView.findViewById(R.id.textView2);
+        txtmenuprice = (TextView) itemView.findViewById(R.id.price);
+        txtmenuname = (TextView) itemView.findViewById(R.id.date);
+        txtdesc = (TextView) itemView.findViewById(R.id.address);
         add_item = (Button) itemView.findViewById(R.id.add_food);
         cardView=itemView.findViewById(R.id.foodCardView);
         cardView.setOnCreateContextMenuListener(this);
@@ -40,8 +37,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCr
 
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-        menu.setHeaderTitle("Select Action");
-        menu.add(0,0,getAdapterPosition(), "DELETE");
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
     }
 }

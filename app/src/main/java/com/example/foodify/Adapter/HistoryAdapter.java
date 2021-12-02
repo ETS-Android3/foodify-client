@@ -1,6 +1,7 @@
 package com.example.foodify.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +41,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<OrderHistoryView> {
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryView holder, int position) {
         OrderHistory history=orders.get(position);
-        holder.date.setText(history.getCreated_at());
-        holder.address.setText("HYD");
-        holder.price.setText(Integer.toString(history.getPrice()));
-
-
+        holder.date.setText(history.getStatus().getDelivered_time());
+        holder.address.setText("BITS Pilani Hyderabad Campus, Secunderabad, Telangana 500078");
+        holder.price.setText(history.getPrice() + " ₹");
     }
 
     @Override
