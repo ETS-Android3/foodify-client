@@ -65,6 +65,7 @@ public class SplashScreen extends AppCompatActivity {
                         Log.v("Print", String.format("Row: %d, Values: %s", cursor.getPosition(),
                                 sb.toString()));
                         token=cursor.getString(1);
+                        Common.token=cursor.getString(1);
                     } while (cursor.moveToNext());
                 }
 

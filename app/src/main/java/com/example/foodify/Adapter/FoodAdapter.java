@@ -2,7 +2,9 @@ package com.example.foodify.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +59,11 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         holder.txtdesc.setText((item.get(position).getDescription()));
         DB = new DBHelper(context);
         Picasso.with(context).load(item.get(position).getImage()).into(holder.txtmenuimage);
+//        holder.add_item.setText(Integer.parseInt(DB.getQuantity(Integer.parseInt(item.get(position).getId()))));
+//        quantity=Integer.parseInt(DB.getQuantity(1));
+//        DB.getQuantity(1);
+        if(quantity>0)
+            holder.add_item.setText(Integer.toString(quantity));
         holder.add_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,17 +109,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                                         quantity = Integer.parseInt(elegantNumberButton.getNumber());
 
                                         int price = item.get(position).getPrice()*quantity;
-
+                                        Log.d("Price is ",Integer.toString(price));
+                                        int calories=item.get(position).getCalories()*quantity;
                                         if(DB.getExistingItem(itemId)) {
-                                            DB.updateItem(itemId, quantity,price);
+                                            DB.updateItem(itemId, quantity,price,calories);
                                             Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            DB.insertData(itemId, quantity, image, name, description, price);
+                                            DB.insertData(itemId, quantity, image, name, description, price,calories);
                                             Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
                                         }
-
+                                                holder.add_item.setText(Integer.toString(quantity));
 //                                         data=DB.getExistingItemData(itemId);
                                     }
+
                                 })
                         .setNegativeButton("Cancel",
                                 new DialogInterface.OnClickListener() {
@@ -121,8 +130,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                                         dialog.dismiss();
                                     }
                                 });
-//                holder.add_item.setText("Ordered");
-//                holder.add_item.setText(data.getString(data.getColumnIndex("price")));
+
                 builder.create();
                 builder.show();
 
@@ -131,7 +139,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
             }
         });
 
-//        holder.add_item.setText(Integer.toString(quantity));
+
     }
 
 

@@ -5,11 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
-
-import com.example.foodify.Adapter.FoodAdapter;
+import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -21,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase DB) {
         DB.execSQL("drop table if exists cart");
-        DB.execSQL("create table cart (itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer)");
+        DB.execSQL("create table cart (itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer,calories integer)");
         DB.execSQL("drop table if exists userDetails");
         DB.execSQL("create table userDetails(id INTEGER primary key autoincrement not null,accesstoken varchar,userId INTEGER UNIQUE)");
     }
@@ -30,13 +26,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
         DB.execSQL("drop table if exists cart");
 
-        DB.execSQL("create table cart (itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer)");
+        DB.execSQL("create table cart (itemId INTEGER UNIQUE ,quantity INTEGER,id INTEGER primary key autoincrement not null, image varchar, name varchar, description varchar, price integer,calories integer)");
         DB.execSQL("drop table if exists userDetails");
         DB.execSQL("create table userDetails(id INTEGER primary key autoincrement not null,accesstoken varchar,userId INTEGER UNIQUE)");
     }
 
 
-    public void insertData(int id, int quantity, String image, String name, String description, int price) {
+    public void insertData(int id, int quantity, String image, String name, String description, int price,int calories) {
         SQLiteDatabase DB = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -46,14 +42,16 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("description", description);
         contentValues.put("price", price);
         contentValues.put("image", image);
+        contentValues.put("calories", calories);
         long result = DB.insert("cart", null, contentValues);
     }
 
-    public void updateItem(int itemId, int quantity,int price){
+    public void updateItem(int itemId, int quantity,int price,int calories){
         ContentValues contentValues = new ContentValues();
         contentValues.put("itemId", itemId);
         contentValues.put("quantity",quantity);
         contentValues.put("price",price);
+        contentValues.put("calories",calories);
         SQLiteDatabase DB = this.getWritableDatabase();
         DB.update("cart", contentValues, "itemId=?", new String[]{Integer.toString(itemId)});
     }
@@ -110,5 +108,22 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase DB = this.getWritableDatabase();
         DB.delete("userDetails",null,null);
     }
+    public void getQuantity(int id)
+    {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor items=DB.rawQuery("select * from cart where itemId=?",new String[]{Integer.toString(id)});
+        StringBuilder sb = new StringBuilder();
+        int columnsQty = items.getColumnCount();
+        for (int idx=0; idx<columnsQty; ++idx) {
+            sb.append(items.getString(idx));
+            if (idx < columnsQty - 1)
+                sb.append("; ");
+        }
+        Log.v("Quanitity is", String.format("Row: %d, Values: %s", items.getPosition(),
+                sb.toString()));
+
+
+    }
+
 
 }

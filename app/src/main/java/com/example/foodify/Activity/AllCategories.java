@@ -79,7 +79,7 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
     }
 
     private void handleError(Throwable throwable) {
-        Toast.makeText(this, "Pritesh ki maa ki chut", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
     }
 
     private void handleResponse(ArrayList<Category> categories) {
@@ -118,6 +118,11 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
             Intent intent=new Intent(AllCategories.this,Login.class);
             startActivity(intent);
 
+        }
+        if(id==R.id.navorders)
+        {
+            Intent intent=new Intent(AllCategories.this,OrderHistory.class);
+            startActivity(intent);
         }
         return true;
     }
