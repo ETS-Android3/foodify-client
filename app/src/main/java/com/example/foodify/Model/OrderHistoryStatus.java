@@ -1,13 +1,12 @@
 package com.example.foodify.Model;
 
-import java.util.Date;
-
 public class OrderHistoryStatus {
     int id;
     int status;
-    Date delivery_time;
-    Date order_time;
-    Date dispatch_time;
+    String delivered_time;
+    String order_time;
+    String dispatch_time;
+
     public int getId() {
         return id;
     }
@@ -24,27 +23,27 @@ public class OrderHistoryStatus {
         this.status = status;
     }
 
-    public Date getDelivery_time() {
-        return delivery_time;
+    public String getDelivered_time() {
+        return delivered_time;
     }
 
-    public void setDelivery_time(Date delivery_time) {
-        this.delivery_time = delivery_time;
+    public void setDelivered_time(String delivered_time) {
+        this.delivered_time = delivered_time;
     }
 
-    public Date getOrder_time() {
+    public String getOrder_time() {
         return order_time;
     }
 
-    public void setOrder_time(Date order_time) {
+    public void setOrder_time(String order_time) {
         this.order_time = order_time;
     }
 
-    public Date getDispatch_time() {
+    public String getDispatch_time() {
         return dispatch_time;
     }
 
-    public void setDispatch_time(Date dispatch_time) {
+    public void setDispatch_time(String dispatch_time) {
         this.dispatch_time = dispatch_time;
     }
 

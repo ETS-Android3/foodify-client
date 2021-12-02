@@ -101,10 +101,6 @@ String token=Common.token;
                             .subscribe(this::handleResponse, this::handleError)
                     );
                 }
-
-
-
-
             }
 
             private void handleError(Throwable error) {
@@ -152,8 +148,6 @@ String token=Common.token;
                 }
                 Log.v("Print", String.format("Row: %d, Values: %s", items.getPosition(),
                         sb.toString()));
-
-
             }
             recycler_cart.setAdapter(new FoodAdapter(cartItems));
 
