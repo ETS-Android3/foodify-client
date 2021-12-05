@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodify.R;
+import com.google.android.material.chip.Chip;
 
 
 public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
@@ -18,6 +19,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCr
     public TextView txtmenuprice;
     public TextView txtdesc;
     public ImageView txtmenuimage;
+    public Chip txtcalories;
     public Button add_item;
     public CardView cardView;
 //    private ItemClickListener itemClickListener;
@@ -28,6 +30,8 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCr
         txtmenuprice = (TextView) itemView.findViewById(R.id.price);
         txtmenuname = (TextView) itemView.findViewById(R.id.date);
         txtdesc = (TextView) itemView.findViewById(R.id.address);
+        txtcalories = (Chip) itemView.findViewById(R.id.calories);
+
         add_item = (Button) itemView.findViewById(R.id.add_food);
         cardView=itemView.findViewById(R.id.foodCardView);
         cardView.setOnCreateContextMenuListener(this);

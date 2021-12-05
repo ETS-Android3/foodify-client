@@ -41,7 +41,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<OrderHistoryView> {
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryView holder, int position) {
         OrderHistory history=orders.get(position);
-        holder.date.setText(history.getStatus().getDelivered_time());
+        holder.date.setText(history.getStatus().getDelivered_time().substring(0, 10));
         holder.address.setText("BITS Pilani Hyderabad Campus, Secunderabad, Telangana 500078");
         holder.price.setText(history.getPrice() + " ₹");
     }

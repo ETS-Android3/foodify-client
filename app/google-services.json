@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "179563323385",
+    "project_id": "foodify-notification",
+    "storage_bucket": "foodify-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179563323385:android:9c00d4ef1c628f098c6728",
+        "android_client_info": {
+          "package_name": "com.example.foodify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "179563323385-o9db1fk3gsljvp5kn6c8bbit0hea1dd0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHBIfLnOaurpPYgN9e6MqiAqtzZnJXEIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "179563323385-o9db1fk3gsljvp5kn6c8bbit0hea1dd0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

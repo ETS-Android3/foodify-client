@@ -8,11 +8,25 @@
     tools:context=".Activity.AllCategories">
 
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="@font/poppins"
+        android:textFontWeight="600"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:layout_height="wrap_content"
+        android:text="Past Orders" />
+
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/recycler_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/textView6"
+        android:layout_marginTop="14dp"
         android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
 
 

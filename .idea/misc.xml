@@ -7,10 +7,12 @@
         <entry key="app/src/main/res/font/poppins.xml" value="0.40572916666666664" />
         <entry key="app/src/main/res/font/sfrpo_text.xml" value="0.40572916666666664" />
         <entry key="app/src/main/res/layout/activity_all_categories.xml" value="0.35054347826086957" />
+        <entry key="app/src/main/res/layout/activity_checkout.xml" value="0.35280797101449274" />
         <entry key="app/src/main/res/layout/activity_food_list.xml" value="0.296195652173913" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.36820652173913043" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24139492753623187" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_order_history.xml" value="0.35280797101449274" />
         <entry key="app/src/main/res/layout/activity_order_success.xml" value="0.36820652173913043" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.35054347826086957" />
         <entry key="app/src/main/res/layout/add_item_quantity.xml" value="0.296195652173913" />
@@ -18,6 +20,8 @@
         <entry key="app/src/main/res/layout/cart.xml" value="0.35054347826086957" />
         <entry key="app/src/main/res/layout/category_item.xml" value="0.20697463768115942" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.35054347826086957" />
+        <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.3161231884057971" />
+        <entry key="app/src/main/res/layout/current_order.xml" value="0.37552083333333336" />
         <entry key="app/src/main/res/layout/food_item.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fooditem_by_category.xml" value="0.5" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.35054347826086957" />
@@ -27,7 +31,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

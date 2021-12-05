@@ -20,6 +20,7 @@ app:cardUseCompatPadding="true">
         android:id="@+id/greencheck"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:layout_marginTop="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_check_circle_24" />

@@ -15,6 +15,7 @@ import com.example.foodify.Model.User;
 import com.example.foodify.R;
 import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
+import com.example.foodify.Utils.NotificationService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("TokenMain", NotificationService.getToken(MainActivity.this));
 
         Button register = findViewById(R.id.signUpButton);
         Button login = findViewById(R.id.logInButton);
