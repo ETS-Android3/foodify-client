@@ -168,6 +168,8 @@ public class Cart extends AppCompatActivity {
                 public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                         cartItems.remove(viewHolder.getAdapterPosition());
                         removeItem((Integer) viewHolder.itemView.getTag());
+//                        if(cartItems.size()==0)
+//                            DB.deleteCart();
                         new FoodAdapter(cartItems).notifyDataSetChanged();
                 }
             }).attachToRecyclerView(recycler_cart);

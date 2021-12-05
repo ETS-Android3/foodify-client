@@ -63,16 +63,18 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         Cursor c=DB.getExistingItemData(Integer.parseInt(item.get(position).getId()));
         int count = c.getColumnCount();
         int id=0;
+        int itemId=0;
         if(c.moveToFirst())
         {
             do
             {
                  id=Integer.parseInt(c.getString(2));
+                 itemId=Integer.parseInt(c.getString(0));
 //                Log.d("Quantity", String.valueOf(quantity));
             }
             while(c.moveToNext());
         }
-        Log.d("Id", String.valueOf(id));
+//        Log.d("Id", String.valueOf(id));
         holder.itemView.setTag(id);
         String details="";
         if(c.moveToFirst())
@@ -80,13 +82,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
             do
             {
                 quantity=Integer.parseInt(c.getString(1));
-                Log.d("Quantity", String.valueOf(quantity));
+                Log.d("Quantity and id is", String.valueOf(quantity)+" " +String.valueOf(id));
             }
             while(c.moveToNext());
         }
-
-        if(quantity>0)
+        if(quantity>0 && Integer.parseInt(item.get(position).getId())==itemId)
             holder.add_item.setText(Integer.toString(quantity));
+
+
         holder.add_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +132,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                                         String name = item.get(position).getName();
                                         String description = item.get(position).getDescription();
                                         quantity = Integer.parseInt(elegantNumberButton.getNumber());
-
+                                        if(quantity>0)
+                                            holder.add_item.setText(Integer.toString(quantity));
                                         int price = item.get(position).getPrice();
                                         Log.d("Price is ",Integer.toString(price));
                                         int calories=item.get(position).getCalories();
