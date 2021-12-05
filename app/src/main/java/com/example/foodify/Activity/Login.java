@@ -93,8 +93,13 @@ public class Login extends AppCompatActivity {
             Gson gson = new GsonBuilder().create();
             try {
                 String errorBody = ((HttpException) error).response().errorBody().string();
-                BadRequestException response = gson.fromJson(errorBody, BadRequestException.class);
-                Toast.makeText(Login.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                int errorCode = ((HttpException) error).response().code();
+                if(errorCode == 401){
+                    BadRequestException response = gson.fromJson(errorBody, BadRequestException.class);
+                    Toast.makeText(Login.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Login.this, Integer.toString(errorCode), Toast.LENGTH_SHORT).show();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

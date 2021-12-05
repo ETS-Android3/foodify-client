@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -20,7 +21,11 @@ import com.example.foodify.R;
 import com.example.foodify.Retrofit.NetworkClient;
 import com.example.foodify.Retrofit.RetrofitInterface;
 import com.example.foodify.Utils.DBHelper;
+import com.example.foodify.Utils.NotificationService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -43,6 +48,9 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_categories);
+
+        Log.d("TOKENFIRE", NotificationService.getToken(this));
+
         drawerLayout=findViewById(R.id.drawer_layout);
         toolbar=findViewById(R.id.toolbar);
         DB=new DBHelper(this);
@@ -65,9 +73,6 @@ public class AllCategories extends AppCompatActivity implements NavigationView.O
         Retrofit retrofitClient = NetworkClient.getInstance();
         service = retrofitClient.create(RetrofitInterface.class);
         loadmenu();
-
-
-
     }
 
     private void loadmenu() {

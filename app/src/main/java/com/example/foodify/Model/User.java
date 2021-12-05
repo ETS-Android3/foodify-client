@@ -4,6 +4,9 @@ public class User {
     private String name;
     private String registered_on;
     private String phone;
+    private String fcm_token;
+    private int calories;
+    private String address;
 
     public String getName() {
         return name;
@@ -44,6 +47,8 @@ public class User {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    public String getAddress() {return address;}
 
     private String isStaff;
     private Integer userId;

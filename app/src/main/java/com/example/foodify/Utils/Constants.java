@@ -6,4 +6,3 @@ public class Constants {
 //    public static final String BASE_URL="https://tiny-cougar-68.loca.lt";
     public static final String BASE_URL="https://thin-jellyfish-94.loca.lt";
 }
-

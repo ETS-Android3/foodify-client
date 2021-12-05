@@ -48,7 +48,7 @@ public class Cart extends AppCompatActivity {
     int price=0;
     int calories=0;
 //    String token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlzU3RhZmYiOmZhbHNlLCJ1c2VySWQiOjF9LCJpYXQiOjE2MzgxMzYwMDF9._VH8jLlncuo3_3D8sOztquW55YNtUeWSHtCCE7m6g1I";
-  String token=Common.token;
+    String token=Common.token;
     Cursor items;
 
     @Override
@@ -62,8 +62,8 @@ public class Cart extends AppCompatActivity {
         recycler_cart.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(this);
         recycler_cart.setLayoutManager(layoutManager);
-        SendCart=findViewById(R.id.sendcart);
-         items=DB.getCartData();
+        SendCart=findViewById(R.id.sendcheckout);
+        items=DB.getCartData();
         Log.d("Token is", Common.token);
         if(items.getCount()==0)
         {
@@ -72,7 +72,7 @@ public class Cart extends AppCompatActivity {
         SendCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               CartItemSent cartItemSents=new CartItemSent();
+                CartItemSent cartItemSents=new CartItemSent();
                 ArrayList<CartSent>cartSents=new ArrayList<CartSent>();
                 Cursor items=DB.getCartData();
                 if(items.getCount()==0) {

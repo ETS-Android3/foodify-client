@@ -56,7 +56,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
         holder.txtmenuname.setText(item.get(position).getName());
         holder.txtmenuprice.setText(Integer.toString(item.get(position).getPrice()) + " ₹");
-        holder.txtdesc.setText((item.get(position).getDescription()));
+        holder.txtdesc.setText(item.get(position).getDescription());
+        holder.txtcalories.setText(item.get(position).getCalories() + " kcal");
 
         DB = new DBHelper(context);
         Picasso.with(context).load(item.get(position).getImage()).into(holder.txtmenuimage);

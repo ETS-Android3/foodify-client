@@ -31,7 +31,9 @@
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
@@ -77,12 +79,28 @@
             android:minHeight="0dp"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:layout_marginRight="8dp"
             android:text="Add"
             android:textFontWeight="600"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/calories"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text="125 kcal"
+            app:chipStartPadding="0dp"
+            app:chipEndPadding="0dp"
+            app:textStartPadding="8dp"
+            app:textEndPadding="8dp"
+            android:fontFamily="@font/sfpro_text_bold"
+            android:textSize="10sp"
+            app:chipMinTouchTargetSize="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/red"
+            android:backgroundTint="@color/red10"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
